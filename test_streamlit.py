@@ -4,15 +4,8 @@ import streamlit as st
 
 # 设置中文字体，避免中文显示为方块
 plt.rcParams['axes.unicode_minus'] = False   # 正常显示负号
-def load_chinese_font():
-    try:
-        font_path = "simhei.ttf"  # 推荐上传这个
-        return fm.FontProperties(fname=font_path)
-    except Exception:
-        st.warning("未找到中文字体文件，可能会出现方框")
-        return None
-
-CH_FONT = load_chinese_font()
+font_path = "NotoSansSC-Regular.otf"
+CH_FONT = fm.FontProperties(fname=font_path)
 
 REQUIRED_COLS = ["姓名", "总分", "日期"]
 
@@ -86,4 +79,5 @@ if uploaded_file:
                 file_name=f"{student_name}_成绩走势.png",
                 mime="image/png"
             )
+
 
