@@ -16,7 +16,7 @@ def download_font(font_url, font_path):
 
 # Google Noto Sans SC 简体中文字体
 font_url = "https://github.com/google/fonts/raw/main/ofl/notosanssc/NotoSansSC[wght].ttf"
-font_path = "NotoSansSC-Regular.otf"
+font_path = "NotoSansSC[wght].ttf"
 
 download_font(font_url, font_path)
 
@@ -94,6 +94,7 @@ if uploaded_file:
                 file_name=f"{student_name}_成绩走势.png",
                 mime="image/png"
             )
+
 
 
 
