@@ -4,9 +4,24 @@ import streamlit as st
 import matplotlib.font_manager as fm
 # 设置中文字体，避免中文显示为方块
 plt.rcParams['axes.unicode_minus'] = False   # 正常显示负号
-font_path = "NotoSansSC-Regular.otf"
-CH_FONT = fm.FontProperties(fname=font_path)
+import os
+import urllib.request
 
+def download_font(font_url, font_path):
+    if not os.path.exists(font_path):
+        try:
+            urllib.request.urlretrieve(font_url, font_path)
+        except Exception as e:
+            print(f"字体下载失败: {e}")
+
+# Google Noto Sans SC 简体中文字体
+font_url = "https://github.com/google/fonts/raw/main/ofl/notosanssc/NotoSansSC-Regular.otf"
+font_path = "NotoSansSC-Regular.otf"
+
+download_font(font_url, font_path)
+
+
+CH_FONT = fm.FontProperties(fname=font_path)
 REQUIRED_COLS = ["姓名", "总分", "日期"]
 
 st.title("📊 学生成绩分析工具 (Web版)")
@@ -79,6 +94,7 @@ if uploaded_file:
                 file_name=f"{student_name}_成绩走势.png",
                 mime="image/png"
             )
+
 
 
 
