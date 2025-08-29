@@ -3,8 +3,16 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 # 设置中文字体，避免中文显示为方块
-plt.rcParams['font.sans-serif'] = ['SimHei']  # 黑体
 plt.rcParams['axes.unicode_minus'] = False   # 正常显示负号
+def load_chinese_font():
+    try:
+        font_path = "simhei.ttf"  # 推荐上传这个
+        return fm.FontProperties(fname=font_path)
+    except Exception:
+        st.warning("未找到中文字体文件，可能会出现方框")
+        return None
+
+CH_FONT = load_chinese_font()
 
 REQUIRED_COLS = ["姓名", "总分", "日期"]
 
@@ -55,11 +63,16 @@ if uploaded_file:
             ax.plot(median_dates, median_df["总分"], marker='s', linestyle='--', label="班级总分中位数")
             ax.set_xticks(dates)
 
-            ax.set_title(f"{student_name} 历次成绩走势")
-            ax.set_xlabel("考试日期")
-            ax.set_ylabel("总分")
-            ax.grid(True)
-            ax.legend()
+            if CH_FONT:
+                ax.set_title(f"{student_name} 历次成绩走势", fontproperties=CH_FONT)
+                ax.set_xlabel("考试日期", fontproperties=CH_FONT)
+                ax.set_ylabel("总分", fontproperties=CH_FONT)
+                ax.legend(prop=CH_FONT)
+            else:
+                ax.set_title(f"{student_name} 历次成绩走势")
+                ax.set_xlabel("考试日期")
+                ax.set_ylabel("总分")
+                ax.legend()
 
             st.pyplot(fig)
 
@@ -73,3 +86,4 @@ if uploaded_file:
                 file_name=f"{student_name}_成绩走势.png",
                 mime="image/png"
             )
+
