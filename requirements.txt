@@ -2,3 +2,4 @@ streamlit
 pandas
 matplotlib
 openpyxl
+https://github.com/google/fonts/raw/main/ofl/notosanssc/NotoSansSC-Regular.otf
