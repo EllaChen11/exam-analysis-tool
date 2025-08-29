@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
-
+import matplotlib.font_manager as fm
 # 设置中文字体，避免中文显示为方块
 plt.rcParams['axes.unicode_minus'] = False   # 正常显示负号
 font_path = "NotoSansSC-Regular.otf"
@@ -79,5 +79,6 @@ if uploaded_file:
                 file_name=f"{student_name}_成绩走势.png",
                 mime="image/png"
             )
+
 
 
