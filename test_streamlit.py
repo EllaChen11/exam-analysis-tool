@@ -1,15 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
 import streamlit as st
-import io
 
-# ✅ 使用仓库中的 NotoSansSC-Light.otf 字体
-FONT_PATH = "NotoSansSC-Light.otf"
-my_font = fm.FontProperties(fname=FONT_PATH)
-
-# 避免负号显示为方块
-plt.rcParams['axes.unicode_minus'] = False   
+# 设置中文字体，避免中文显示为方块
+plt.rcParams['font.sans-serif'] = ['SimHei']  # 黑体
+plt.rcParams['axes.unicode_minus'] = False   # 正常显示负号
 
 REQUIRED_COLS = ["姓名", "总分", "日期"]
 
@@ -60,16 +55,16 @@ if uploaded_file:
             ax.plot(median_dates, median_df["总分"], marker='s', linestyle='--', label="班级总分中位数")
             ax.set_xticks(dates)
 
-            # ✅ 设置中文字体
-            ax.set_title(f"{student_name} 历次成绩走势", fontproperties=my_font)
-            ax.set_xlabel("考试日期", fontproperties=my_font)
-            ax.set_ylabel("总分", fontproperties=my_font)
-            ax.legend(prop=my_font)
+            ax.set_title(f"{student_name} 历次成绩走势")
+            ax.set_xlabel("考试日期")
+            ax.set_ylabel("总分")
             ax.grid(True)
+            ax.legend()
 
             st.pyplot(fig)
 
             # 提供下载图片功能
+            import io
             buf = io.BytesIO()
             fig.savefig(buf, format="png", bbox_inches="tight")
             st.download_button(
