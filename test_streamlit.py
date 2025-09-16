@@ -4,20 +4,16 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import io
 import os
-import urllib.request
 from matplotlib import font_manager
 
 # --------------------------
-# 中文字体设置（支持 Streamlit Cloud）
+# 中文字体设置（从仓库加载，避免网络下载）
 # --------------------------
-FONT_URL = "https://github.com/google/fonts/raw/main/ofl/notosanssc/NotoSansSC-Regular.otf"
-FONT_PATH = "/tmp/NotoSansSC-Regular.otf"
-
-# 下载字体到临时目录
+FONT_PATH = "NotoSansSC-Light.otf"
 if not os.path.exists(FONT_PATH):
-    urllib.request.urlretrieve(FONT_URL, FONT_PATH)
+    st.error(f"字体文件不存在：{FONT_PATH}，请确保已上传到仓库目录下")
+    st.stop()
 
-# 加载字体
 my_font = font_manager.FontProperties(fname=FONT_PATH)
 matplotlib.rcParams['font.family'] = my_font.get_name()
 matplotlib.rcParams['axes.unicode_minus'] = False
