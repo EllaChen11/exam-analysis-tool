@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import io
 
-# 字体设置（跨平台支持中文）
-plt.rcParams['font.sans-serif'] = ['Noto Sans CJK SC', 'Arial', 'sans-serif']
+# 中文显示设置（Streamlit Cloud 上如果没有 Noto Sans CJK SC 也不会报错）
+plt.rcParams['font.sans-serif'] = ['Arial', 'sans-serif']
 plt.rcParams['axes.unicode_minus'] = False
 
 REQUIRED_COLS = ["姓名", "总分", "日期"]
