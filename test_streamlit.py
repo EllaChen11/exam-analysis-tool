@@ -1,14 +1,31 @@
 import pandas as pd
+import matplotlib
 import matplotlib.pyplot as plt
 import streamlit as st
 import io
+import os
+import urllib.request
+from matplotlib import font_manager
 
-# 中文显示设置（Streamlit Cloud 上如果没有 Noto Sans CJK SC 也不会报错）
-plt.rcParams['font.sans-serif'] = ['Arial', 'sans-serif']
-plt.rcParams['axes.unicode_minus'] = False
+# --------------------------
+# 中文字体设置（支持 Streamlit Cloud）
+# --------------------------
+FONT_URL = "https://github.com/google/fonts/raw/main/ofl/notosanssc/NotoSansSC-Regular.otf"
+FONT_PATH = "/tmp/NotoSansSC-Regular.otf"
 
+# 下载字体到临时目录
+if not os.path.exists(FONT_PATH):
+    urllib.request.urlretrieve(FONT_URL, FONT_PATH)
+
+# 加载字体
+my_font = font_manager.FontProperties(fname=FONT_PATH)
+matplotlib.rcParams['font.family'] = my_font.get_name()
+matplotlib.rcParams['axes.unicode_minus'] = False
+
+# --------------------------
+# 配置 Streamlit 页面
+# --------------------------
 REQUIRED_COLS = ["姓名", "总分", "日期"]
-
 st.title("📊 学生成绩分析工具 (Web版)")
 
 # 上传 Excel 文件
@@ -55,14 +72,15 @@ if uploaded_file:
             ax.plot(dates, stu["总分"], marker='o', label=f"{student_name} 总分")
             ax.plot(median_dates, median_df["总分"], marker='s', linestyle='--', label="班级总分中位数")
 
+            # X 轴标签旋转
             ax.set_xticks(range(len(dates)))
-            ax.set_xticklabels(dates, rotation=45, ha="right")
+            ax.set_xticklabels(dates, rotation=45, ha="right", fontproperties=my_font)
 
-            ax.set_title(f"{student_name} 历次成绩走势")
-            ax.set_xlabel("考试日期")
-            ax.set_ylabel("总分")
+            ax.set_title(f"{student_name} 历次成绩走势", fontproperties=my_font)
+            ax.set_xlabel("考试日期", fontproperties=my_font)
+            ax.set_ylabel("总分", fontproperties=my_font)
             ax.grid(True)
-            ax.legend()
+            ax.legend(prop=my_font)
 
             st.pyplot(fig)
 
